@@ -28,7 +28,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		req.setAttribute("hora", new SimpleDateFormat("HH:MM:ss dd/mm/yyyy").format(Calendar.getInstance().getTime()));
-		
+		build fail here
 		req.getRequestDispatcher("WEB-INF/teste.jsp").forward(req, resp);
 	}
 
