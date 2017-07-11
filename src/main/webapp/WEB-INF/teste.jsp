@@ -6,6 +6,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${hora}
+	Hora: ${hora}
+	<br/>
+	Endereço: ${endereco}
+	<br/>
 </body>
 </html>
