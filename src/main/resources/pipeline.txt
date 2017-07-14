@@ -7,20 +7,20 @@ node {
       // **       in the global configuration.           
       mvnHome = tool 'M3'
    }
-   stage('Testes unitários') {
-       
-       if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' test"
-      } else {
-         bat(/"${mvnHome}\bin\mvn" test/)
-      }
-   }
    stage('Build') {
       
       if (isUnix()) {
          sh "'${mvnHome}/bin/mvn' -DskipTests clean package"
       } else {
          bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
+      }
+   }
+   stage('Testes unitários') {
+       
+       if (isUnix()) {
+         sh "'${mvnHome}/bin/mvn' test"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" test/)
       }
    }
    stage('Results') {
