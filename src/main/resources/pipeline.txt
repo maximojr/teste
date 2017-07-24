@@ -29,6 +29,20 @@ node {
       //step([$class: 'JUnitResultArchiver', testResults: 'target/TEST-*.xml'])
       echo '--- buil realizado ---'
    }
+   stage('Testes não automatizados concluídos?'){
+       script {
+           env.CONFIRMA_TESTES_MANUAIS = input message: 'Escolha:',
+           parameters: [choice(name: 'Os testes manuais foram concluídos com sucesso?', choices: 'não\nsim', description: 'Escolha')]
+        }
+   }
+   stage('Testes não automatizados'){
+       if (env.CONFIRMA_TESTES_MANUAIS!='sim'){
+           echo '-- Testes manuais sem sucesso --'
+           error 'Build não passou no teste manual!'
+       } else {
+           echo '-- Testes manuais OK --'
+       }
+   }
    stage('Confirmar deploy?'){
        script {
            env.CONFIRMA_DEPLOY = input message: 'Escolha:',
