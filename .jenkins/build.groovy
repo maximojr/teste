@@ -2,8 +2,6 @@ node('docker_slave') {
    def mvnHome
    stage('Baixar source') { // for display purposes
       checkout scm
-	  sh "whoami"
-	  sh "ifconfig"
 	  
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
