@@ -2,7 +2,7 @@ node {
    def mvnHome
    stage('Baixar source') { // for display purposes
       checkout scm
-	  
+	  sh "docker ps"
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
