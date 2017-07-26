@@ -57,7 +57,7 @@ node('docker_slave') {
    stage('Deploy'){
        if (env.CONFIRMA_DEPLOY=='sim'){
 		   
-		  //sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war /tmp-docker-build-context"
+		  sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           withDockerContainer([image: "tehranian/dind-jenkins-slave"]){
 			  withDockerServer([uri: ""]) {
 				 withDockerRegistry([url: ""]) {
