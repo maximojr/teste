@@ -2,7 +2,7 @@ node {
    def mvnHome
    stage('Baixar source') { // for display purposes
       checkout scm
-	  sh "docker ps"
+	  
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
@@ -56,14 +56,15 @@ node {
        if (env.CONFIRMA_DEPLOY=='sim'){
 		   
 		  //sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war /tmp-docker-build-context"
-           
-          withDockerServer([uri: "tcp://dev.discover.com.br:4243"]) {
-             withDockerRegistry([credentialsId: 'vagrant-credentials', url: "http://registry.discover.com.br"]) {
-               // we give the image the same version as the .war package
-               def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
-               image.push()
-             }
-           }
+          withDockerContainer([image: "tehranian/dind-jenkins-slave"]){
+			  withDockerServer([uri: ""]) {
+				 withDockerRegistry([url: ""]) {
+				   // we give the image the same version as the .war package
+				   def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
+				   image.push()
+				 }
+			   }
+		  }
            
        } else {
            echo '-- não fazer deploy --'
