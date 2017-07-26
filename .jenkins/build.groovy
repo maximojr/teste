@@ -4,7 +4,7 @@ node {
       checkout scm
 	  sh "whoami"
 	  sh "ifconfig"
-	  sh "docker ps"
+	  sh "find / -name 'docker'"
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
