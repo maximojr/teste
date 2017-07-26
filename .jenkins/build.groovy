@@ -1,7 +1,8 @@
 node('docker_slave') {
    def mvnHome
    stage('Baixar source') { // for display purposes
-      checkout scm
+      
+	  checkout scm
 	  
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
@@ -9,6 +10,8 @@ node('docker_slave') {
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
       mvnHome = tool 'M3'
+	  
+	  sh "mvn -v"
    }
    stage('Build') {
       
