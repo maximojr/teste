@@ -1,4 +1,4 @@
-node {
+node('docker_slave') {
    def mvnHome
    stage('Baixar source') { // for display purposes
       checkout scm
