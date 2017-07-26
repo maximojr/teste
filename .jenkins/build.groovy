@@ -1,7 +1,7 @@
 node {
    def mvnHome
    stage('Baixar source') { // for display purposes
-      git 'https://github.com/maximojr/teste.git'
+      checkout scm
       
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
