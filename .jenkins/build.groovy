@@ -59,6 +59,8 @@ node {
           withDockerContainer([image: "tehranian/dind-jenkins-slave"]){
 			  withDockerServer([uri: ""]) {
 				 withDockerRegistry([url: ""]) {
+				   echo "whoami"
+				   echo "ifconfig"
 				   // we give the image the same version as the .war package
 				   def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
 				   image.push()
