@@ -2,8 +2,8 @@ node {
    def mvnHome
    stage('Baixar source') { // for display purposes
       checkout scm
-	  echo "whoami"
-	  echo "ifconfig"
+	  sh "whoami"
+	  sh "ifconfig"
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
