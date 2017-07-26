@@ -55,7 +55,7 @@ node {
    stage('Deploy'){
        if (env.CONFIRMA_DEPLOY=='sim'){
 		   
-		  sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war /tmp-docker-build-context"
+		  //sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war /tmp-docker-build-context"
            
           withDockerServer([uri: "tcp://dev.discover.com.br:4243"]) {
              withDockerRegistry([credentialsId: 'vagrant-credentials', url: "http://registry.discover.com.br"]) {
