@@ -13,8 +13,7 @@ node('docker_slave') {
    stage('Build') {
       
       if (isUnix()) {
-         //sh "'${mvnHome}/bin/mvn' -DskipTests clean package"
-		 sh "mvn -DskipTests clean package"
+         sh "'${mvnHome}/bin/mvn' -DskipTests clean package"
       } else {
          bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
       }
@@ -22,8 +21,7 @@ node('docker_slave') {
    stage('Testes unitários') {
        
        if (isUnix()) {
-         //sh "'${mvnHome}/bin/mvn' test"
-		 sh "mvn test"
+         sh "'${mvnHome}/bin/mvn' test"
       } else {
          bat(/"${mvnHome}\bin\mvn" test/)
       }
@@ -57,9 +55,7 @@ node('docker_slave') {
    stage('Deploy'){
        if (env.CONFIRMA_DEPLOY=='sim'){
 		   
-		  //sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
-		  
-		  sh "cp target/teste.war ./tmp-docker-build-context"
+		  sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           withDockerContainer([image: "tehranian/dind-jenkins-slave"]){
 			  withDockerServer([uri: ""]) {
 				 withDockerRegistry([url: ""]) {
