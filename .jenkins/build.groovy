@@ -1,20 +1,19 @@
-node('docker_slave') {
+node {
    def mvnHome
    stage('Baixar source') { // for display purposes
-      
-	  checkout scm
+      checkout scm
 	  
 	  // save our docker build context before we switch branches
 	  sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
-      //mvnHome = tool 'M3'
+      mvnHome = tool 'M3'
    }
    stage('Build') {
       
       if (isUnix()) {
-         sh "mvn -DskipTests clean package"
+         sh "'${mvnHome}/bin/mvn' -DskipTests clean package"
       } else {
          bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
       }
@@ -22,7 +21,7 @@ node('docker_slave') {
    stage('Testes unitários') {
        
        if (isUnix()) {
-         sh "mvn test"
+         sh "'${mvnHome}/bin/mvn' test"
       } else {
          bat(/"${mvnHome}\bin\mvn" test/)
       }
@@ -55,11 +54,12 @@ node('docker_slave') {
    }
    stage('Deploy'){
        if (env.CONFIRMA_DEPLOY=='sim'){
-		  
-		  sh "cp /home/jenkins/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
-          withDockerContainer([image: "tehranian/dind-jenkins-slave"]){
-			  withDockerServer([uri: ""]) {
-				 withDockerRegistry([url: ""]) {
+		   
+		  sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
+          
+		  withDockerContainer([image: "tomcat:latest"]){
+			  withDockerServer([uri: "192.168.33.11"]) {
+				 withDockerRegistry([url: "registry.discover.com.br"]) {
 				   
 				   // we give the image the same version as the .war package
 				   def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
