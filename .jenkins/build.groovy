@@ -55,7 +55,7 @@ node {
    stage('Deploy'){
        if (env.CONFIRMA_DEPLOY=='sim'){
 		   
-		  sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
+		  sh "cp /var/jenkins_home/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           
 		  withDockerContainer([image: "tomcat:latest"]){
 			  withDockerServer([uri: "192.168.33.11"]) {
