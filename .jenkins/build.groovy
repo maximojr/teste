@@ -57,16 +57,14 @@ node {
 		   
 		  sh "cp /var/jenkins_home/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           
-		  withDockerContainer([image: "tomcat:latest"]){
-			  withDockerServer([uri: "tcp://192.168.33.11:4243"]) {
-				 withDockerRegistry([url: "registry.discover.com.br"]) {
-				   
-				   // we give the image the same version as the .war package
-				   def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
-				   image.push()
-				 }
-			   }
-		  }
+		  withDockerServer([uri: "tcp://192.168.33.11:4243"]) {
+			 withDockerRegistry([credentialsId:"jenkins-slave", url: "registry.discover.com.br"]) {
+			   
+			   // we give the image the same version as the .war package
+			   def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
+			   image.push()
+			 }
+		   }
            
        } else {
            echo '-- não fazer deploy --'
