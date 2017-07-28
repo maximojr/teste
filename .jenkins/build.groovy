@@ -5,7 +5,7 @@ node('docker_slave') {
 	  checkout scm
 	  
 	  // save our docker build context before we switch branches
-	  sh "cp -r ./.docker/build tmp-docker-build-context"
+	  //sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
@@ -14,7 +14,7 @@ node('docker_slave') {
    stage('Build') {
       
       if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' -DskipTests clean package"
+         sh "mvn -DskipTests clean package"
       } else {
          bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
       }
@@ -22,7 +22,7 @@ node('docker_slave') {
    stage('Testes unitários') {
        
        if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' test"
+         sh "mvn test"
       } else {
          bat(/"${mvnHome}\bin\mvn" test/)
       }
