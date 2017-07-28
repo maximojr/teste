@@ -15,7 +15,7 @@ node('docker_slave') {
    stage('Build') {
       
       if (isUnix()) {
-         sh "/usr/share/maven/mvn -DskipTests clean package"
+         sh "/usr/share/maven/bin/mvn -DskipTests clean package"
       } else {
          //bat(/"${mvnHome}\bin\mvn" clean package/)
       }
@@ -23,7 +23,7 @@ node('docker_slave') {
    stage('Testes unitários') {
        
        if (isUnix()) {
-         sh "/usr/share/maven/mvn test"
+         sh "/usr/share/maven/bin/mvn test"
       } else {
          //bat(/"${mvnHome}\bin\mvn" test/)
       }
