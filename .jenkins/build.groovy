@@ -59,7 +59,8 @@ node {
           
 		  withDockerServer([uri: "tcp://192.168.33.11:4243"]) {
 			 withDockerRegistry([credentialsId:"jenkins-slave", url: "http://registry.discover.com.br"]) {
-			   sh "whoami"
+			   sh "ifconfig"
+			   sh "docker ps"
 			   // we give the image the same version as the .war package
 			   //def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
 			   //image.push()
