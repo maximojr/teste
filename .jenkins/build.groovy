@@ -9,14 +9,15 @@ node('docker_slave') {
 	  
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
-      mvnHome = tool 'M3'
+      //mvnHome = tool 'M3'
+	  sh "mvn -v"
    }
    stage('Build') {
       
       if (isUnix()) {
          sh "mvn -DskipTests clean package"
       } else {
-         bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
+         //bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
       }
    }
    stage('Testes unitários') {
@@ -24,7 +25,7 @@ node('docker_slave') {
        if (isUnix()) {
          sh "mvn test"
       } else {
-         bat(/"${mvnHome}\bin\mvn" test/)
+         //bat(/"${mvnHome}\bin\mvn" test/)
       }
    }
    stage('Results') {
