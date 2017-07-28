@@ -5,7 +5,7 @@ node('docker_slave') {
 	  checkout scm
 	  
 	  // save our docker build context before we switch branches
-	  //sh "cp -r ./.docker/build tmp-docker-build-context"
+	  sh "cp -r ./.docker/build tmp-docker-build-context"
 	  
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
@@ -55,8 +55,8 @@ node('docker_slave') {
    }
    stage('Deploy'){
        if (env.CONFIRMA_DEPLOY=='sim'){
-		   
-		  sh "cp /var/lib/docker/volumes/proxy-reverso_jenkins-vol/_data/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
+		  
+		  sh "cp /home/jenkins/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           withDockerContainer([image: "tehranian/dind-jenkins-slave"]){
 			  withDockerServer([uri: ""]) {
 				 withDockerRegistry([url: ""]) {
