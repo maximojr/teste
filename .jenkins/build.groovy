@@ -10,24 +10,21 @@ node('docker_slave') {
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
       //mvnHome = tool 'M3'
-	  sh "mvn -v"
    }
    stage('Build') {
       
-	  sh "/var/lib/dpkg/info/ca-certificates-java.postinst configure"
-	  
       if (isUnix()) {
-         sh "/usr/share/maven/bin/mvn -DskipTests clean package"
+         sh "mvn -DskipTests clean package"
       } else {
-         //bat(/"${mvnHome}\bin\mvn" clean package/)
+         bat(/"${mvnHome}\bin\mvn" -DskipTests clean package/)
       }
    }
    stage('Testes unitários') {
        
        if (isUnix()) {
-         sh "/usr/share/maven/bin/mvn test"
+         sh "mvn test"
       } else {
-         //bat(/"${mvnHome}\bin\mvn" test/)
+         bat(/"${mvnHome}\bin\mvn" test/)
       }
    }
    stage('Results') {
