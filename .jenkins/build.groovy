@@ -58,7 +58,7 @@ node {
 		  sh "cp /var/jenkins_home/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           
 		  withDockerContainer([image: "tomcat:latest"]){
-			  withDockerServer([uri: "192.168.33.11"]) {
+			  withDockerServer([uri: "tcp://192.168.33.11:4243"]) {
 				 withDockerRegistry([url: "registry.discover.com.br"]) {
 				   
 				   // we give the image the same version as the .war package
