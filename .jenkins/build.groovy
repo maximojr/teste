@@ -58,11 +58,11 @@ node {
 		  sh "cp /var/jenkins_home/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
 			
 			node("docker_slave"){
-				withDockerServer([uri: ""]) {
-					withDockerContainer([image: "imagem/slave_extendida"]){
+				withDockerContainer([image: "imagem/slave_extendida"]){
+					withDockerServer([uri: ""]) {
 						withDockerRegistry([url: ""]) {
 							sh "ifconfig"
-							sh "docker ps"
+							//sh "docker ps"
 							// we give the image the same version as the .war package
 							//def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
 							//image.push()
