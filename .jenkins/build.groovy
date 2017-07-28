@@ -14,7 +14,7 @@ node('docker_slave') {
    }
    stage('Build') {
       
-	  sh "sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure"
+	  sh "/var/lib/dpkg/info/ca-certificates-java.postinst configure"
 	  
       if (isUnix()) {
          sh "/usr/share/maven/bin/mvn -DskipTests clean package"
