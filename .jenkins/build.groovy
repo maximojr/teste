@@ -32,7 +32,7 @@ node {
       //step([$class: 'JUnitResultArchiver', testResults: 'target/TEST-*.xml'])
       echo '--- buil realizado ---'
    }
-   stage('Testes não automatizados concluídos?'){
+   /*stage('Testes não automatizados concluídos?'){
        script {
            env.CONFIRMA_TESTES_MANUAIS = input message: 'Escolha:',
            parameters: [choice(name: 'Os testes manuais foram concluídos com sucesso?', choices: 'não\nsim', description: 'Escolha')]
@@ -51,23 +51,23 @@ node {
            env.CONFIRMA_DEPLOY = input message: 'Escolha:',
            parameters: [choice(name: 'Efetuar deploy', choices: 'não\nsim', description: 'Escolha "sim" se quer efetuar o deploy deste build')]
         }
-   }
+   }*/
    stage('Deploy'){
-       if (env.CONFIRMA_DEPLOY=='sim'){
+       //if (env.CONFIRMA_DEPLOY=='sim'){
 		   
 		  sh "cp /var/jenkins_home/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
           
 		  withDockerServer([uri: "tcp://192.168.33.11:4243"]) {
 			 withDockerRegistry([credentialsId:"jenkins-slave", url: "http://registry.discover.com.br"]) {
-			   
+			   sh "whoami"
 			   // we give the image the same version as the .war package
-			   def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
-			   image.push()
+			   //def image = docker.build("registry.discover.com.br/tomcat_discover:1.0", "--build-arg PACKAGE_VERSION=1.0 ./tmp-docker-build-context")
+			   //image.push()
 			 }
 		   }
            
-       } else {
+       /*} else {
            echo '-- não fazer deploy --'
-       }
+       }*/
    }
 }
