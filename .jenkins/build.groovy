@@ -58,8 +58,8 @@ node {
 		  sh "cp /var/jenkins_home/workspace/pipeline_1/target/teste.war ./tmp-docker-build-context"
 			
 			node("docker_slave"){
-				withDockerContainer([image: "tomcat:latest"]){
-					withDockerServer([uri: ""]) {
+				withDockerServer([uri: ""]) {
+					withDockerContainer([image: "imagem/slave_extendida"]){
 						withDockerRegistry([url: ""]) {
 							sh "ifconfig"
 							sh "docker ps"
