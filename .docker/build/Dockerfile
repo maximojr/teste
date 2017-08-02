@@ -4,7 +4,7 @@ FROM tomcat:8.0.38
 ARG PACKAGE_VERSION
 RUN echo "${PACKAGE_VERSION}" >> /usr/local/tomcat/webapps/version.txt
 
-COPY project.war /usr/local/tomcat/webapps/teste.war
+# COPY project.war /usr/local/tomcat/webapps/teste.war
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
